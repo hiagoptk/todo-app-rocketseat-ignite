@@ -41,7 +41,21 @@ app.get('/todos', checksExistsUserAccount, (request, response) => {
 });
 
 app.post('/todos', checksExistsUserAccount, (request, response) => {
+  const { username } = request;
 
+  const { title, deadline } = request.body;
+
+  const todo = { 
+    id: uuidv4(),
+    title,
+    done: false, 
+    deadline, 
+    created_at: new Date()
+  }
+
+  username.todos.push(todo);
+  
+  return response.status(201).json({message: 'Success!!'})
 });
  
 app.put('/todos/:id', checksExistsUserAccount, (request, response) => {
